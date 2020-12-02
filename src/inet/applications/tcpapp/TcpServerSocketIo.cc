@@ -27,6 +27,7 @@ Define_Module(TcpServerSocketIo);
 void TcpServerSocketIo::acceptSocket(TcpAvailableInfo *availableInfo)
 {
     Enter_Method("acceptSocket");
+    ASSERT(socket == nullptr);
     socket = new TcpSocket(availableInfo);
     socket->setOutputGate(gate("socketOut"));
     socket->setCallback(this);

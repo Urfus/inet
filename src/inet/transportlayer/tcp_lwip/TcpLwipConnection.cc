@@ -98,6 +98,7 @@ TcpLwipConnection::~TcpLwipConnection()
     delete sendQueueM;
     if (pcbM) {
         pcbM->callback_arg = nullptr;
+        pcbM->state = (LwipTcpLayer::tcp_state)-1;    // TODO set to invalid tcp state, because the tcp_pcb_purge() doesn't clear the pcb members in some states (currently CLOSED, TIME_WAIT, LISTEN)
         tcpLwipM->getLwipTcpLayer()->tcp_pcb_purge(pcbM);
         memp_free(MEMP_TCP_PCB, pcbM);
         pcbM = nullptr;
